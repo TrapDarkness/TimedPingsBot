@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 load_dotenv()
-TOKEN = "ODA5NTgwNDUwMzE3NzI5ODYz.YCXKjA.CkFXXj7mNJuvPkaHRdj5Na8EB80"
+TOKEN = "Insert_Token_here"
 
 # 2
 bot = commands.Bot(command_prefix='}')
