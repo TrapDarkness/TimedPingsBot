@@ -139,7 +139,27 @@ async def simp(ctx, charactername :str, filename, save = "save"):
 
         # with open(parent_dir, 'rb') as fp:
         #     await ctx.channel.send(file=discord.File(fp, filename))
+    elif save == "delete":
+        if "moderator" in [i.name.lower() for i in ctx.author.roles]:
+            print("delete")
+            filename += ".png"
 
+            path_file = os.path.join(parent_dir, charactername, filename)  
+            print(path_file)
+            path_dir = os.listdir(path)
+            print(path_dir)
+            os.remove(path_file)
+
+            fmt = 'File Deleted'
+            print('file deleted')
+            await ctx.channel.send(fmt)
+
+        # Do things only moderators can do
+        else:
+            fmt = 'You do not have permission for this command'
+            print('Not moderator')
+            await ctx.channel.send(fmt)
+        # Tell the user they don't have the moderator role or pass
     else:
         fmt = 'You did not input correct save'
         print('wrong save form')
