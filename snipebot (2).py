@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 load_dotenv()
-TOKEN = "ODA5NTgwNDUwMzE3NzI5ODYz.YCXKjA.p1c2Kud3NCgqVW9Stg1sWcfhzqU"
+TOKEN = "INSERT_TOKEN_HERE"
 
 # 2
 bot = commands.Bot(command_prefix='}')
@@ -33,16 +33,22 @@ async def roll(ctx, number_of_dice: int, number_of_sides: int):
 
 deleted_message = "Delete?"
 test_array = []
+edited_message_before = "Edited Before?"
+edited_before_array = []
+edited_message_after = "Edited After??"
+edited_after_array = []
 @bot.event
 async def on_message_delete(message):
         fmt = '{0.author} has deleted the message: {0.content}'
         global test_message
         test_message = message
         # print(test_message)
+        
         global test_array
-        test_array.insert(0, message)
         if len(test_array) == 6:
             test_array.pop(0)
+        test_array.insert(0, message)
+        
         
         print(test_array)
         # await message.channel.send(fmt.format(message))
@@ -63,6 +69,31 @@ async def on_message_delete(message):
         
 #         print(test_array)
 #         # await message.channel.send(fmt.format(message))
+@bot.event
+async def on_message_edit(message_before, message_after):
+    
+
+
+    global edited_message_before
+    edited_message_before = message_before
+    global edited_message_after
+    edited_message_after = message_after
+
+    # print(test_message)
+    global edited_before_array
+    if len(edited_before_array) == 6:
+        edited_before_array.pop(0)
+    edited_before_array.insert(0, edited_message_before)
+
+
+    global edited_after_array
+    if len(edited_after_array) == 6:
+        edited_after_array.pop(0)
+    edited_after_array.insert(0, edited_message_after)
+
+
+    print(edited_after_array[0].content)
+
 
 @bot.command(name='snipe', help='See deleted messages. Input command in "}snipe X" form, it will return the past X messages, up to 5')
 async def snipe(ctx, depth :int):
@@ -71,6 +102,17 @@ async def snipe(ctx, depth :int):
     for item in test_array[0:depth]:
         fmt = '{0.author} has deleted the message: {0.content}'
         await ctx.channel.send(fmt.format(item))
+
+@bot.command(name='editsnipe', help='See edited messages. Input command in "}editsnipe X" form, it will return the past X messages, up to 5')
+async def editsnipe(ctx, depth :int):
+    # fmt = '{0.author} has deleted the messages: {0.content}'
+    # message_array = []
+    i = 0
+    for item in edited_after_array[0:depth]:
+        if edited_after_array[0].guild.name == ctx.guild.name:
+            fmt = str(edited_before_array[i].author) + ' has edited their message from: "' + edited_before_array[i].content + '" to: "' + edited_after_array[i].content + '" in ' + str(edited_after_array[i].channel)
+            await ctx.channel.send(fmt)
+            i += 1
 
     # print(test_message)
     # await ctx.send(deleted_message)
