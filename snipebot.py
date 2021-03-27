@@ -4,6 +4,11 @@ import random
 import discord
 from discord import file
 
+import asyncio
+from datetime import datetime, timedelta
+import time
+import sched
+
 from dotenv import load_dotenv
 
 # 1
@@ -15,16 +20,43 @@ TOKEN = "INSERT_TOKEN_HERE"
 # 2
 bot = commands.Bot(command_prefix='}')
 
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
+
+@bot.event
+async def on_message(message):
+    if "69" in message.content and ("527866997396996096" not in message.content):
+        if random.randint(1,2) == 1:
+            await message.channel.send("*every time*")
+        else:
+            await message.channel.send("*Nice.*")
+    if ("So you have chosen death" in message.content) and (str(message.author) == "!hellotheredoriyah#6535"):
+        await message.channel.send("https://tenor.com/view/lotr-so-you-have-chosen-death-chosen-death-lord-of-the-rings-gif-15767548")
+        print(message.author)
+    if "Omae wa mou shindeiru" in message.content:
+        await message.channel.send("*Nani?!*")
+    if "420" in message.content:
+        if random.randint(1,2) == 1:
+            await message.channel.send("*whiff*")
+        else:
+            await message.channel.send("https://1d4chan.org/images/8/8a/Necro_blunt_hit.jpeg ")
+            await message.channel.send("This is what happens when you smoke the necronomicon")
+    if ("aayyyy" in message.content) and (str(message.author) == "Card#4050"):
+        print(message.author)
+        path_file = os.path.join("C:/Users/novalabsrobotics/Bot/Games and Stuff/Yang", "yang_eyyy.png")  
+        print(path_file)
+        await message.channel.send(file=discord.File(path_file))
+        
+    await bot.process_commands(message)
 
 @bot.command(name='roll_dice', help='Simulates rolling dice. Input in form "roll_dice X Y" X is number of dice to be rolled, and Y is the number of sides on those dice. Max is 69')
 async def roll(ctx, number_of_dice: int, number_of_sides: int):
     if number_of_dice > 69:
         number_of_dice = 69
-    if number_of_sides > 69:
-        number_of_sides = 69
+    if number_of_sides > 31415:
+        number_of_sides = 31415
     dice = [
         str(random.choice(range(1, number_of_sides + 1)))
         for _ in range(number_of_dice)
@@ -41,9 +73,10 @@ async def on_message_delete(message):
         test_message = message
         # print(test_message)
         global test_array
-        test_array.insert(0, message)
         if len(test_array) == 6:
             test_array.pop(0)
+
+        test_array.insert(0, message)
         
         print(test_array)
         author = str(message.author)
@@ -59,22 +92,8 @@ async def on_message_delete(message):
 
         # await message.channel.send(fmt.format(message))
 
-# @bot.event
-# async def on_message(message):
-#         if message.attachments:
-#             print(5)
-#             await message.attachments[0].save("Weiss.png", seek_begin=True, use_cached=False)
 
-#         global test_message
-#         test_message = message
-#         # print(test_message)
-#         global test_array
-#         test_array.insert(0, message)
-#         if len(test_array) == 6:
-#             test_array.pop(0)
-        
-#         print(test_array)
-#         # await message.channel.send(fmt.format(message))
+
 
 @bot.command(name='snipe', help='See deleted messages. Input command in "}snipe X" form, it will return the past X messages, up to 5')
 async def snipe(ctx, depth :int):
@@ -82,7 +101,10 @@ async def snipe(ctx, depth :int):
     # message_array = []
     for item in test_array[0:depth]:
         fmt = '{0.author} has deleted the message: {0.content}'
-        await ctx.channel.send(fmt.format(item))
+        if "!hellotheredoriyah#6535" in fmt.format(item) and fmt.format(item).count(".") == 2:
+            await ctx.channel.send("*Nice Try*")
+        else:
+            await ctx.channel.send(fmt.format(item))
 
     # print(test_message)
     # await ctx.send(deleted_message)
@@ -283,9 +305,152 @@ async def game_list(ctx, command, game = "None"):
         # else:
         #     await ctx.channel.send('User has no games listed')
 
-    
-    
+# @bot.command(name='reminder', help='Set a reminder')
+# async def reminder(ctx, alarm_time):
+#     await bot.wait_until_ready()
+#     while not bot.is_closed:
+#         channel = ctx..channel
+#         messages = ('Test')
+#         f = '%H:%M'
 
+#         now = datetime.strftime(datetime.now(), f)
+#         # get the difference between the alarm time and now
+#         diff = (datetime.strptime(alarm_time, f) - datetime.strptime(now, f)).total_seconds()
 
+#         # create a scheduler
+#         s = sched.scheduler(time.perf_counter, time.sleep)
+#         # arguments being passed to the function being called in s.enter
+#         args = (bot.send_message(channel, ctx), )
+#         # enter the command and arguments into the scheduler
+#         s.enter(seconds, 1, bot.loop.create_task, args)
+#         s.run() # run the scheduler, will block the event loop
+# @bot.command(name='howsus', help='random number from 0-100 for sus%')
+# async def howsus(ctx, id = None):
+#     sus_percent = random.randint(0, 100)
+#     response = ">>> **sus significance determination autonomous operation** \n \n"
+#     print("hi")
+#     if id == None:
+#         response += "You are " + str(sus_percent) + "% *sus*"
+#         print("no id")
+#     else:
+#        response += id + " is " + str(sus_percent) + "% *sus*"
+#        print(id)
+#     await ctx.channel.send(response)
+#     # await ctx.channel.send("cat")
+
+# @bot.command(name='howgay', help='random number from 0-100 for gay%')
+# async def howgay(ctx, id = None):
+#     gay_percent = random.randint(0, 100)
+#     response = ">>> **gay proportion determination autonomous operation** \n \n"
+#     print("hi")
+#     if id == None:
+#         response += "You are " + str(gay_percent) + "% *gay*"
+#         print("no id")
+#     else:
+#        response += id + " is " + str(gay_percent) + "% *gay*"
+#        print(id)
+#     await ctx.channel.send(response)
+
+@bot.command(name='how', help='Format "}how X" random number from 0-100 for "X"%')
+async def howgay(ctx, word, id = None):
+    word_percent = random.randint(0, 100)
+    response = ">>> **" + word + " proportion determination autonomous operation** \n \n"
+    print("hi")
+    if id == None:
+        response += "You are " + str(word_percent) + "% *" + word + "*"
+        print("no id")
+    else:
+       response += id + " is " + str(word_percent) + "% *" + word + "*"
+       print(id)
+    await ctx.channel.send(response)
+    
+@bot.command(name='keypad', help='Input Notation for BBTAG')
+async def keypad(ctx):
+    guild = ctx.message.guild.name
+    #directory = "Miscellaneous"
+        
+    # Parent Directories  
+    parent_dir = "c:/Users/novalabsrobotics/Bot/Miscellaneous"
+    #parent_dir += guild
+
+    # Path  
+    path = os.path.join(parent_dir, guild)  
+        
+    # Create the directory  
+    # 'charactername'  
+    try:  
+        os.mkdir(parent_dir) 
+        print("Directory '% s' created for server" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    try:  
+        os.mkdir(path) 
+        print("Directory '% s' created for character" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    filename = "keypad_notation"            
+    filename += ".png"
+    print(filename)
+    flags = os.O_RDWR | os.O_CREAT 
+
+    # path = os.path.join(path, filename)
+    # await ctx.channel.send(os.listdir(path))
+    path_file = os.path.join(parent_dir, guild, filename)  
+    print(path_file)
+    # await ctx.channel.send(os.open(path1, flags))
+
+    await ctx.channel.send(file=discord.File(path_file))
+
+    # await ctx.channel.send(file=discord.File(filename))
+
+    # with open(parent_dir, 'rb') as fp:
+        #     await ctx.channel.send(file=discord.File(fp, filename))
+
+# @bot.command(name='pin', help='"Pins" messages')
+# async def pin(ctx, pin_name, pin):
+
+#     pin = pin.lower()
+#     author_name = str(ctx.message.author)
+#     guild = ctx.message.guild.name
+        
+#     # Parent Directories  
+#     parent_dir = "c:/Users/novalabsrobotics/Bot/Pinned_Messages/"
+#     parent_dir += guild
+#     within_parent_dir = parent_dir + "/"
+#     try:  
+#             os.mkdir(parent_dir) 
+#             print("Directory '% s' created for server" % guild)  
+#     except OSError as error:  
+#         print(error) 
+
+#     path_dir = os.listdir(within_parent_dir)
+#     print(path_dir)
+#     if (pin_name +".txt") not in path_dir:
+
+#         open_file = open(within_parent_dir + pin_name + ".txt", "w")
+#     # open_file.write(fmt.format(message))
+#         open_file.write(pin)
+#         open_file.write("\n")
+#         open_file.close()
+#         # user_game_dictionary[author_name] = game
+#         # user_game_dictionary[author_name] += ' Test'
+#         await ctx.channel.send(pin_name + " successfully added to list")
+#         # print(user_game_dictionary[author_name])
+
+#     elif pin_name == "list" and pin == "":
+#         print(path_dir)
+#         await ctx.channel.send(path_dir)
+
+#     else:
+#         f = open(within_parent_dir + pin_name + ".txt", "w")
+#         lines = f.readlines()
+#         lines_stripped = []
+#         for line in lines:
+#             stripped = line.replace("\n", "")
+#             lines_stripped.append(stripped)
+#         print(lines_stripped)
+#         await ctx.channel.send(lines_stripped)
 
 bot.run(TOKEN)
