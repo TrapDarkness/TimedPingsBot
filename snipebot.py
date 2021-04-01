@@ -27,7 +27,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if "69" in message.content and ("527866997396996096" not in message.content):
+    if " 69" in message.content or (message.content == "69"):
         if random.randint(1,2) == 1:
             await message.channel.send("*every time*")
         else:
@@ -102,7 +102,7 @@ async def snipe(ctx, depth :int):
     for item in test_array[0:depth]:
         fmt = '{0.author} has deleted the message: {0.content}'
         if "!hellotheredoriyah#6535" in fmt.format(item) and fmt.format(item).count(".") == 2:
-            await ctx.channel.send("*Nice Try*")
+            await ctx.channel.send("*Heh. Nice Try*")
         else:
             await ctx.channel.send(fmt.format(item))
 
@@ -403,11 +403,109 @@ async def keypad(ctx):
 
     await ctx.channel.send(file=discord.File(path_file))
 
-    # await ctx.channel.send(file=discord.File(filename))
+@bot.command(name='buffmk', help='Cursed')
+async def buffmk(ctx):
+    guild = ctx.message.guild.name
+    #directory = "Miscellaneous"
+        
+    # Parent Directories  
+    parent_dir = "c:/Users/novalabsrobotics/Bot/Miscellaneous"
+    #parent_dir += guild
 
+    # Path  
+    path = os.path.join(parent_dir, guild)  
+        
+    # Create the directory  
+    # 'charactername'  
+    try:  
+        os.mkdir(parent_dir) 
+        print("Directory '% s' created for server" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    try:  
+        os.mkdir(path) 
+        print("Directory '% s' created for character" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    filename = "buffmk"            
+    filename += ".jpg"
+    print(filename)
+    flags = os.O_RDWR | os.O_CREAT 
+
+    # path = os.path.join(path, filename)
+    # await ctx.channel.send(os.listdir(path))
+    path_file = os.path.join(parent_dir, guild, filename)  
+    print(path_file)
+    # await ctx.channel.send(os.open(path1, flags))
+
+    await ctx.channel.send(file=discord.File(path_file))
+    # await ctx.channel.send(file=discord.File(filename))
     # with open(parent_dir, 'rb') as fp:
         #     await ctx.channel.send(file=discord.File(fp, filename))
 
+
+@bot.command(name='bigtripled', help='Cursed')
+async def bigtripled(ctx):
+    guild = ctx.message.guild.name
+    #directory = "Miscellaneous"
+        
+    # Parent Directories  
+    parent_dir = "c:/Users/novalabsrobotics/Bot/Miscellaneous"
+    #parent_dir += guild
+
+    # Path  
+    path = os.path.join(parent_dir, guild)  
+        
+    # Create the directory  
+    # 'charactername'  
+    try:  
+        os.mkdir(parent_dir) 
+        print("Directory '% s' created for server" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    try:  
+        os.mkdir(path) 
+        print("Directory '% s' created for character" % guild)  
+    except OSError as error:  
+        print(error)   
+
+    filename = "buffmk"            
+    filename += ".jpg"
+    print(filename)
+    flags = os.O_RDWR | os.O_CREAT 
+
+    # path = os.path.join(path, filename)
+    # await ctx.channel.send(os.listdir(path))
+    path_file = os.path.join(parent_dir, guild, filename)  
+    print(path_file)
+    # await ctx.channel.send(os.open(path1, flags))
+
+    await ctx.channel.send("https://cdn.discordapp.com/attachments/766544169065644054/825819401844555796/KingDDD_NotThere_Still.gif")
+    # await ctx.channel.send(file=discord.File(filename))
+    # with open(parent_dir, 'rb') as fp:
+        #     await ctx.channel.send(file=discord.File(fp, filename))
+
+@bot.command(name='delete')
+async def delete(ctx,msglimit : int):
+    if str(ctx.author) =="!hellotheredoriyah#6535":
+        # deleted = await bot.purge_from(ctx.message.channel, limit=msglimit)
+        # msg = discord.utils.get(await ctx.channel.history.get(author_name = "!QrowIsHot")
+        # print("Cleared **{}** Messages".format(len(deleted)))
+        counter = 0
+        messages = await ctx.channel.history(limit=200).flatten()
+        for message in messages:
+            if counter == msglimit:
+                return
+            else:
+                if message.author.name == "!QrowIsHot":
+                    await message.delete()
+                    counter +=1
+    else:
+        await ctx.channel.send("You do not have permission to use this command")
+    # await bot.say("Cleared **{}** Messages".format(len(deleted)))
 # @bot.command(name='pin', help='"Pins" messages')
 # async def pin(ctx, pin_name, pin):
 
